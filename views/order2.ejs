@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Cake PaintingOrder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+                
+        button {
+        background-color: #FF7DB4;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        }
+
+        button:hover {
+        opacity: 0.8;
+        }
+
+        .imgcontainer {
+        text-align: center;
+        }
+
+        img.avatar {
+        width: 10%;
+        border-radius: 50%;
+        }
+
+        .header {
+        background-color: #FF7DB4;
+        height: fit-content;
+        padding: 16px;
+        }
+        .menu {
+            height: fit-content;
+            width: fit-content;
+            padding: 16px;
+            margin: 5px auto;
+        }
+        ul li {
+            float: left;
+            list-style: none;
+            vertical-align: middle;
+            text-align: center;
+            color: #FFFFFF;
+        }
+        .menuLink {
+            text-decoration:none; /* 링크(<a> 태그)가 가지는 기본 꾸밈 효과(밑줄 등)을 없앰 */
+            color: white;
+            display: block; /*링크를 글씨가 있는 부분 뿐만아니라 전체 영역을 클릭해도 링크가 걸리게 설정 */
+            width: 300px; /* 메뉴링크의 넓이 설정 */
+            padding: 0 15px;
+            font-size: 25px; /* 폰트 사이즈 12px로 설정  */
+            font-weight: bold; /* 폰트를 굵게  */
+            font-family: "Trebuchet MS", Dotum, Arial; /* 기본 폰트 적용, 시스템 폰트를 종류별로 순서대로  */
+        }
+
+        .container {
+        background-color: #FFFFFF;
+        display: flex;
+        /* height: 100vh; */
+        justify-content: center; align-items: center; margin: 0px;
+        padding: 16px;
+        }
+
+        span.psw {
+        float: right;
+        /* padding-top: 16px; */
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 768px) {
+            .container {width: 50%;}
+            
+            img.avatar {
+            width: 20%;
+            }
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="imgcontainer">
+            <img src="Logo2.png" alt="Avatar" class="avatar">
+        </div>
+        <span class="psw"><a href="/register">LogOut</a></span>
+        <div>
+            <ul class="menu">
+                <li><a class="menuLink" href="#">내맘대로 케이크 주문하기</a></li>
+                <li><a class="menuLink" href="#">프린팅 케이크 주문하기</a></li>
+                <li><a class="menuLink" href="#">케이크 자랑하기</a></li>
+                <li><a class="menuLink" href="#">MyPage</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+
+    </div>
+</body>
+</html>

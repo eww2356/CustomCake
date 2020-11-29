@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Cake Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif; background-color: #FF7DB4; display: flex; height: 100vh; justify-content: center; align-items: center; margin: 0px;}
+        form {width: 30%;}
+
+        input[type=text], input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        }
+
+        button {
+        background-color: #FF7DB4;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        }
+
+        button:hover {
+        opacity: 0.8;
+        }
+
+        .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+        }
+
+        img.avatar {
+        width: 40%;
+        border-radius: 50%;
+        }
+
+        .container {
+        border: 3px solid #f1f1f1;
+        background-color: #FFFFFF;
+        padding: 16px;
+        }
+
+        .container2 {
+        background-color: #FFFFFF;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        }
+
+        span.psw {
+        float: right;
+        /* padding-top: 16px; */
+        }
+
+        span.psw2 {
+        float: left;
+        /* padding-top: 16px; */
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 768px) {
+            form {width: 50%;}
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <div class="imgcontainer">
+            <img src="Logo2.png" alt="Avatar" class="avatar">
+        </div>
+        <div class="container">
+            <label for="u_id"><b>Id</b></label>
+            <input type="text" placeholder="Enter Username" name="u_id" required>
+
+            <label for="u_pw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="u_pw" required>
+                
+            <button type="submit">Login</button>
+            <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+            <div class="container2">
+                <!-- <span class="psw2">Forgot <a href="#">password?</a></span> -->
+                <span class="psw"><a href="/register">Register</a></span>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
