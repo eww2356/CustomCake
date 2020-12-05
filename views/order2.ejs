@@ -33,6 +33,9 @@
         background-color: #FF7DB4;
         height: fit-content;
         padding: 16px;
+        /* 내부 요소에 따라 자동 높이 조절 */
+        overflow: hidden;
+        height: auto;
         }
         .menu {
             height: fit-content;
@@ -57,6 +60,11 @@
             font-weight: bold; /* 폰트를 굵게  */
             font-family: "Trebuchet MS", Dotum, Arial; /* 기본 폰트 적용, 시스템 폰트를 종류별로 순서대로  */
         }
+        .logOut {
+            text-decoration:none; /* 링크(<a> 태그)가 가지는 기본 꾸밈 효과(밑줄 등)을 없앰 */
+            color: white;
+            display: block; /*링크를 글씨가 있는 부분 뿐만아니라 전체 영역을 클릭해도 링크가 걸리게 설정 */
+        }
 
         .container {
         background-color: #FFFFFF;
@@ -64,6 +72,7 @@
         /* height: 100vh; */
         justify-content: center; align-items: center; margin: 0px;
         padding: 16px;
+        margin: 0 auto;
         }
 
         span.psw {
@@ -76,7 +85,7 @@
             .container {width: 50%;}
             
             img.avatar {
-            width: 20%;
+            width: 15%;
             }
             
         }
@@ -87,7 +96,7 @@
         <div class="imgcontainer">
             <img src="Logo2.png" alt="Avatar" class="avatar">
         </div>
-        <span class="psw"><a href="/register">LogOut</a></span>
+        <span class="psw"><a class="logOut" href="/register">LogOut</a></span>
         <div>
             <ul class="menu">
                 <li><a class="menuLink" href="#">내맘대로 케이크 주문하기</a></li>
@@ -98,7 +107,33 @@
         </div>
     </div>
     <div class="container">
-
+        <div><!-- 주문 정보 -->
+            <form action="" enctype="multipart/form-data" method="post">
+                <div>
+                    <label>빵 모양</label>
+                    <input type="checkbox" name="bread_shape" value="circle"> 
+                    <svg height="40" width="40" viewBox="0 0 40 40" preserveAspectRatio="none">
+                      <circle cx="20" cy="20" r="15" stroke="black" stroke-width="3" fill="white" />
+                    </svg>
+                    <input type="checkbox" name="bread_shape" value="rec"> 
+                    <svg height="40" width="40" viewBox="0 0 40 40" preserveAspectRatio="none">
+                      <rect x="5" y="5" width="30" height="30" stroke="black" stroke-width="3" fill="white" />
+                    </svg>
+                    <input type="checkbox" name="bread_shape" value="heart"> 
+                    <svg width="40" height="40" viewBox="0 0 500 500" preserveAspectRatio="none">
+                        <path d="M340.8,98.4c50.7,0,91.9,41.3,91.9,92.3c0,26.2-10.9,49.8-28.3,66.6L256,407.1L105,254.6c-15.8-16.6-25.6-39.1-25.6-63.9
+                            c0-51,41.1-92.3,91.9-92.3c38.2,0,70.9,23.4,84.8,56.8C269.8,121.9,302.6,98.4,340.8,98.4 M340.8,83C307,83,276,98.8,256,124.8
+                            c-20-26-51-41.8-84.8-41.8C112.1,83,64,131.3,64,190.7c0,27.9,10.6,54.4,29.9,74.6L245.1,418l10.9,11l10.9-11l148.3-149.8
+                            c21-20.3,32.8-47.9,32.8-77.5C448,131.3,399.9,83,340.8,83L340.8,83z"
+                         style="stroke:#000;  fill:#000;" />
+                    </svg>
+                </div>
+                <div>
+                    <label>프린팅할 이미지</label>
+                    <input type="file" name="attachment" id="attachment">
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

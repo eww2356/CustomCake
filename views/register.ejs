@@ -69,7 +69,7 @@
     </style>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="/registerProc" method="post">
         <div class="imgcontainer">
             <img src="Logo2.png" alt="Avatar" class="avatar">
         </div>
@@ -89,6 +89,8 @@
             <label for="u_address"><b>Address</b></label>
             <input type="text" placeholder="Enter Address" name="u_address" required>
 
+            <input type="hidden" name="u_like" value="">
+            
             <button type="submit">Register</button>
             <div class="container2">
                 <span class="psw">Go to <a href="/login">Login</a></span>
