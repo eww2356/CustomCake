@@ -5,13 +5,15 @@ let app = express();
 const ejs = require('ejs');
 
 // var mongoose = require('mongoose');
-const Database = require('./models/User');
-var db = new Database();
+const userDatabase = require('./models/User');
+var userDb = new userDatabase();
+const oderDatabase = require('./models/Order');
+var orderDb = new oderDatabase();
 
 // Express의 미들웨어 불러오기
 var bodyParser = require('body-parser')
   , cookieParser = require('cookie-parser')
-  , static = require('serve-static')
+  , static = require('serve-static')      //특정 폴더의 파일들을 특정 패스로 접근할 수 있도록 열어주는 역할
   , errorHandler = require('errorhandler');
   
 // 에러 핸들러 모듈 사용
@@ -19,6 +21,33 @@ var expressErrorHandler = require('express-error-handler');
 
 // Session 미들웨어 불러오기
 var expressSession = require('express-session');
+
+// 파일 처리
+var fs = require('fs');
+
+// 파일 업로드용 미들웨어
+var multer = require('multer');
+
+//multer 미들웨어 사용 : 미들웨어 사용 순서 중요  body-parser -> multer -> router
+// 파일 제한 : 10개, 1G
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+      callback(null, 'upload')
+  },
+  filename: function (req, file, callback) {
+      var extension = path.extname(file.originalname);
+      var basename = path.basename(file.originalname, extension);
+      callback(null, basename + Date.now() + extension);
+  }
+});
+
+var upload = multer({ 
+    storage: storage,
+    limits: {
+		files: 100,
+		fileSize: 1024 * 1024 * 1024
+	}
+});
 
 // 기본 속성 설정
 app.set('port', process.env.PORT || 3000);
@@ -31,6 +60,7 @@ app.use(bodyParser.json())
 
 // views 폴더를 static으로 오픈
 app.use('/views', static(path.join(__dirname, 'views')));
+app.engine("ejs", ejs.renderFile);
  
 // cookie-parser 설정
 app.use(cookieParser());
@@ -41,6 +71,9 @@ app.use(expressSession({
 	resave:true,
 	saveUninitialized:true
 }));
+
+app.use(express.static('img'));
+app.use(express.static('upload'));
 
 // 404 에러 페이지 처리
 // var errorHandler = expressErrorHandler({
@@ -59,77 +92,16 @@ app.use(expressSession({
 //const hostname = '127.0.0.1';
 //const port = 3000;
 
-app.use(express.static('img'));
-
-/*//===== 데이터베이스 연결 =====//
-
-// 데이터베이스 객체를 위한 변수 선언
-var database;
-
-// 데이터베이스 스키마 객체를 위한 변수 선언
-var UserSchema;
-
-// 데이터베이스 모델 객체를 위한 변수 선언
-var UserModel;
-
-//데이터베이스에 연결
-function connectDB() {
-	// 데이터베이스 연결 정보
-	var databaseUrl = 'mongodb://localhost:27017/local';
-	 
-	// 데이터베이스 연결
-  console.log('데이터베이스 연결을 시도합니다.');
-  mongoose.Promise = global.Promise;  // mongoose의 Promise 객체는 global의 Promise 객체 사용하도록 함
-	mongoose.connect(databaseUrl);
-	database = mongoose.connection;
-	
-	database.on('error', console.error.bind(console, 'mongoose connection error.'));	
-	database.on('open', function () {
-		console.log('데이터베이스에 연결되었습니다. : ' + databaseUrl);	
-        
-		// 스키마 정의
-		UserSchema = mongoose.Schema({
-        u_id:{type:String, required:[true,'u_id is required!'], unique:true},
-        u_pw:{type:String, required:[true,'u_pw is required!'], select:false},
-        u_name:{type:String, required:[true,'u_name is required!'], index: 'hashed'},
-        u_phone:{type:String, required:[true,'u_phone is required!']},
-        u_address:{type:String, required:[true,'u_address is required!']},
-        u_like:{type:String, 'default':""}
-		});
-		
-		// 스키마에 static으로 findById 메소드 추가
-		UserSchema.static('findById', function(id, callback) {
-			return this.find({id:id}, callback);
-		});
-		
-    // 스키마에 static으로 findAll 메소드 추가
-		UserSchema.static('findAll', function(callback) {
-			return this.find({}, callback);
-		});
-		
-		console.log('UserSchema 정의함.');
-		
-		// UserModel 모델 정의
-		UserModel = mongoose.model("users2", UserSchema);
-		console.log('UserModel 정의함.');
-	});
-	
-    // 연결 끊어졌을 때 5초 후 재연결
-	database.on('disconnected', function() {
-        console.log('연결이 끊어졌습니다. 5초 후 재연결합니다.');
-        setInterval(connectDB, 5000);
-    });
-}*/
-
-//===== 서버 시작 =====//
-
-var loginRouter = require('./routes/login')(app, db);
-var registerRouter = require('./routes/register')(app, db);
+var loginRouter = require('./routes/login')(app, userDb);
+var registerRouter = require('./routes/register')(app, userDb);
 //var mainRouter = require('./routes/main')(app);
 //var customOrderRouter = require('./routes/order1')(app);  // order1
-var paintingOrderRouter = require('./routes/order2')(app);  // order2
+var paintingOrderRouter = require('./routes/order2')(app, orderDb, upload);  // order2
 // var userRouter = require('./routes/user')(app);  // mypage
 // var boardRouter = require('./routes/board')(app);
+
+
+//===== 서버 시작 =====//
 
 // 프로세스 종료 시에 데이터베이스 연결 해제
 process.on('SIGTERM', function () {
@@ -147,7 +119,4 @@ if (database) {
 // Express 서버 시작
 http.createServer(app).listen(app.get('port'), function(){
   console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
-
-  // 데이터베이스 연결을 위한 함수 호출
-  // connectDB();
 });

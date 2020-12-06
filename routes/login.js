@@ -5,7 +5,7 @@ module.exports = function(app, db) {
     res.render('login.ejs');
   });
   
-  // create
+  // login 처리(계정 확인 및 세션 등록)
   app.post('/loginProc', function(req, res){
     console.log('/loginProc 호출됨.');
 
@@ -33,14 +33,19 @@ module.exports = function(app, db) {
         if (docs) {
           console.dir(docs);
   
-                  // 조회 결과에서 사용자 이름 확인
-          var username = docs[0].name;
+          // 조회 결과에서 사용자 이름 확인
+          // var username = docs[0].name;
           
           // res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
           // res.write('<h1>로그인 성공</h1>');
           // res.write('<div><p>사용자 아이디 : ' + paramId + '</p></div>');
           // res.write('<div><p>사용자 이름 : ' + username + '</p></div>');
           // res.write("<br><br><a href='/public/login.html'>다시 로그인하기</a>");
+          // 세션에 유저 정보 등록
+          req.session.user =
+          {
+              u_id: u_id
+          };
           res.redirect("order2");
           res.end();
         
@@ -48,7 +53,7 @@ module.exports = function(app, db) {
           res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
           res.write('<h1>로그인  실패</h1>');
           res.write('<div><p>아이디와 패스워드를 다시 확인하십시오.</p></div>');
-          res.write("<br><br><a href='/public/login.html'>다시 로그인하기</a>");
+          res.write("<br><br><a href='/views/login.ejs'>다시 로그인하기</a>");
           res.end();
         }
       });
@@ -59,5 +64,26 @@ module.exports = function(app, db) {
       res.end();
     }
     
+  });
+
+  // 로그아웃 세션 처리
+  app.get('/logout', function(req, res){
+    if (req.session.user) {
+      console.log('로그아웃 처리');
+      req.session.destroy(
+          function (err) {
+              if (err) {
+                  console.log('세션 삭제시 에러');
+                  return;
+              }
+              console.log('세션 삭제 성공');
+              res.redirect("login");
+          }
+      );          //세션정보 삭제
+    } else {
+        console.log('로긴 안되어 있음');
+        res.redirect("login");
+    }
+
   });
 }
