@@ -12,6 +12,14 @@ module.exports = function(app, db, upload) {
     
     var bread_shape = req.body.bread_shape || req.query.bread_shape;
     var bread_size = req.body.bread_size || req.query.bread_size;
+    var price;
+    if(bread_size == 15){
+      price = 10000;
+    } else if(bread_size == 20){
+      price = 15000;
+    } else if(bread_size == 30){
+      price = 20000;
+    }
     // var attachment = req.body.attachment || req.query.attachment;
 
     var files = req.files;
@@ -43,6 +51,7 @@ module.exports = function(app, db, upload) {
     var _oh_option = {
       bread_shape : bread_shape,
       bread_size : bread_size,
+      price : price,
       attachment : {
         originalname : originalname,
         filename : filename,
