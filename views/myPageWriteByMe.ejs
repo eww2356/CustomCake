@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Cake My Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+        body {font-family: "NanumSquare", Dotum, Arial; margin:0;}
+        
+        #user, #writeByMe {
+            text-shadow: -2px 0 #fff,
+                        0 2px #fff,
+                        2px 0 #fff,
+                        0 -2px #fff;
+            color: #FF7DB4;
+        }
+                
+        button {
+        background-color: #FF7DB4;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        }
+
+        button:hover {
+        opacity: 0.8;
+        }
+
+        .container {
+        background-color: #FFFFFF;
+        display: flex;
+        /* height: 100vh; */
+        justify-content: center;
+        /* align-items: center; */
+        margin: 0px;
+        padding: 16px;
+        margin: 0 auto;
+        width: 80%;
+        }
+
+        .list {
+            float: right;
+            width: 80%;
+            height: 500px;
+            border: 2px solid #E2A6B4;
+            padding: 10px;
+        }
+
+        span.psw {
+        float: right;
+        /* padding-top: 16px; */
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 768px) {
+            .container {width: 80%;}
+            .recomment {width: 150px; height: 150px;}
+        }
+    </style>
+</head>
+<body>
+    <%- include('header'); %>
+    <div class="container">
+        <!-- nav -->
+        <%- include('myPageNav'); %>
+        <div class="list">
+            
+        </div>
+    </div>
+</body>
+</html>

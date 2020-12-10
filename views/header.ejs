@@ -22,7 +22,7 @@
         padding: 16px;
         margin: 5px auto;
     }
-    ul li {
+    .menu li {
         float: left;
         list-style: none;
         vertical-align: middle;
@@ -55,15 +55,15 @@
 </style>
 <div class="header">
     <div class="imgcontainer">
-        <img src="Logo2.png" alt="Avatar" class="avatar">
+        <a href="/main"><img src="Logo2.png" alt="Avatar" class="avatar"></a>
     </div>
     <span class="psw"><a class="logOut" href="/logout">LogOut</a></span>
     <div>
         <ul class="menu">
-            <li><a class="menuLink" href="#">내맘대로 케이크 주문하기</a></li>
+            <li><a class="menuLink" href="/order1">내맘대로 케이크 주문하기</a></li>
             <li><a class="menuLink" href="/order2" id="order2">프린팅 케이크 주문하기</a></li>
-            <li><a class="menuLink" href="#">케이크 자랑하기</a></li>
-            <li><a class="menuLink" href="#">MyPage</a></li>
+            <li><a class="menuLink" href="/board">케이크 자랑하기</a></li>
+            <li><a class="menuLink" href="/orderHistory" id="user">MyPage</a></li>
         </ul>
     </div>
 </div>

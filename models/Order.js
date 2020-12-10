@@ -44,8 +44,8 @@ function connectDB() {
         }, 'oh_user 칼럼의 값이 없습니다.');
     
         // 스키마에 static으로 findById 메소드 추가
-        OrderSchema.static('findByUser', function(user, callback) {
-            return this.find({oh_user:user}, callback);
+        OrderSchema.static('findById', function(u_id, callback) {
+            return this.find({oh_user:u_id}, callback);
         });
         
         // 스키마에 static으로 findAll 메소드 추가
@@ -93,6 +93,20 @@ module.exports = class Database {
             callback(null, addedOrder);	     
         });
     };
+
+    // 전체 주문 목록 조회
+    getOrderList = function(database, u_id, callback) {
+        OrderModel.findById(u_id, function(err, orderList){
+            if (err) {
+                callback(err, null);
+                return;
+            }
+            
+            console.log("전체 주문 데이터 조회함.");
+            callback(null, orderList);	   
+        });
+    };
+    
 }
 
 

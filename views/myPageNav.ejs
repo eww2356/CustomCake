@@ -1,0 +1,39 @@
+
+<style>
+.navWrap {
+    float: left;
+}
+.nav {
+    height: fit-content;
+    width: 150px;
+    padding: 0px;
+    margin: 0px;
+}
+.nav li {
+    float: left;
+    list-style: none;
+    vertical-align: middle;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #FF7DB4;
+    padding: 5px 0px;
+}
+.navLink {
+    text-decoration:none; /* 링크(<a> 태그)가 가지는 기본 꾸밈 효과(밑줄 등)을 없앰 */
+    color: white;
+    display: block; /*링크를 글씨가 있는 부분 뿐만아니라 전체 영역을 클릭해도 링크가 걸리게 설정 */
+    width: 120px; /* 메뉴링크의 넓이 설정 */
+    padding: 0 15px;
+    font-size: 25px; /* 폰트 사이즈 12px로 설정  */
+    font-weight: bold; /* 폰트를 굵게  */
+    font-family: "NanumSquare", Dotum, Arial; /* 기본 폰트 적용, 시스템 폰트를 종류별로 순서대로  */
+}
+</style>
+<div class="navWrap">
+    <ul class="nav">
+        <li><a class="navLink" href="/orderHistory" id="orderHistory">주문 내역</a></li>
+        <li><a class="navLink" href="/writeByMe" id="writeByMe">내가 쓴 글</a></li>
+        <li><a class="navLink" href="/likeBoard" id="likeBoard">좋아요한 글</a></li>
+        <li><a class="navLink" href="/editMyInfo" id="editMyInfo">정보수정</a></li>
+    </ul>
+</div>

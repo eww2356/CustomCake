@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomCake Board</title>
+    <style>
+        @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+        body{
+            background-color: #FF7DB4;
+            font-family: "NanumSquare", Dotum, Arial; 
+           
+        }
+        .header{
+            display: block;
+            width: 100%;
+            height: auto;
+            text-align: center;
+        }
+        .header img{
+            margin-top: 5px;
+            margin-bottom: 5px;
+            width: 80px;
+            height: 80px;
+        }
+        .header-menu{
+            margin: 0 auto;
+            text-align: center;
+            border-style: solid;
+            border-color: #ff006c;
+            border-right-width: medium;
+            border-radius: 25px;
+            background-color: white;
+            width: 65%;
+            height: 50px;
+            color: #ff006c;
+            font-size: 18px;
+            line-height: 50px;
+        }
+        .header-menu span{
+            margin: 10px;
+        }
+        .main-container{
+            display: block;
+            margin: 0 auto;
+            margin-top: 40px;
+            text-align: center;
+            width: 100%;
+            height: 500px;
+        }
+        .footer{
+            display: block;
+            width: 100%;
+            height: 40px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .footer p{
+            width: 100%;
+            height: auto;
+            text-align: center;
+            font-size: 10px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/main"><img src="Logo2.png"></a>
+        <div class="header-menu">
+            <a href="order1"><span>기본 케이크 주문하기</span></a>
+            <a href="order2"><span>프린팅 케이크 주문하기</span></a>
+            <span>마이페이지</span>
+            <span>로그아웃</span>
+        </div>
+    </div>
+    <div class="main-container">
+        <form method="post">
+            <button name="modal" value="open">글쓰기</button>
+            <!-- 글쓰기 model 부분 -->
+            <% if (show_modal) { %>
+                <div id="modal" style="display: block">
+                <!-- 제목, 컨텐츠, 사진업로드, 업로드 버튼 -->
+                    etc
+                </div>
+            <% } %>
+            <!--  -->
+        </form>
+    </div>
+    <div class="footer">
+        <p> Copyright(c)2020 CustomCake All rights reserved.</p>
+    </div>
+
+    <script>
+
+    </script>
+</body>
+</html>

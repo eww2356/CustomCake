@@ -9,6 +9,8 @@ const userDatabase = require('./models/User');
 var userDb = new userDatabase();
 const oderDatabase = require('./models/Order');
 var orderDb = new oderDatabase();
+// const boardDatabase = require('./models/Board');
+// var borderDb = new boardDatabase();
 
 // Express의 미들웨어 불러오기
 var bodyParser = require('body-parser')
@@ -94,10 +96,10 @@ app.use(express.static('upload'));
 
 var loginRouter = require('./routes/login')(app, userDb);
 var registerRouter = require('./routes/register')(app, userDb);
-//var mainRouter = require('./routes/main')(app);
-//var customOrderRouter = require('./routes/order1')(app);  // order1
+var mainRouter = require('./routes/main')(app);
+var customOrderRouter = require('./routes/order1')(app, orderDb/*orderbasicDb*/);  // order1
 var paintingOrderRouter = require('./routes/order2')(app, orderDb, upload);  // order2
-// var userRouter = require('./routes/user')(app);  // mypage
+var userRouter = require('./routes/user')(app, userDb, orderDb);  // mypage
 // var boardRouter = require('./routes/board')(app);
 
 

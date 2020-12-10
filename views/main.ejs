@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome CustomCake</title>
+
+    <style>
+        @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+        body{
+            background-color: #FF7DB4;
+            font-family: "NanumSquare", Dotum, Arial; 
+           
+        }
+        .header{
+            display: block;
+            width: 100%;
+            height: auto;
+            text-align: center;
+        }
+        .header img{
+            margin-top: 5px;
+            margin-bottom: 5px;
+            width: 80px;
+            height: 80px;
+        }
+        .header-menu{
+            margin: 0 auto;
+            text-align: center;
+            border-style: solid;
+            border-color: #ff006c;
+            border-right-width: medium;
+            border-radius: 25px;
+            background-color: white;
+            width: 65%;
+            height: 50px;
+            color: #ff006c;
+            font-size: 18px;
+            line-height: 50px;
+        }
+        .header-menu span{
+            margin: 10px;
+        }
+        /* span 정렬 추가하기 /임시 */
+        .main-container{
+            display: block;
+            margin: 0 auto;
+            margin-top: 40px;
+            text-align: center;
+            width: 100%;
+            height: 500px;
+        }
+        .left-img-container{
+            display: inline-block;
+            text-align: center;
+        }
+        .left-img-container img{
+            width: 500px;
+            height: 500px;
+        }
+        .right-img-container{
+            display: inline-block;
+            text-align: center;
+        }
+        .right-img-container img{
+            width: 500px;
+            height: 500px;
+        }
+        .left-img-container div, .right-img-container div{
+            border-style: solid;
+            border-color: #ff006c;
+            border-right-width: medium;
+            border-radius: 25px;
+            background-color: white;
+            width: 200px;
+            height: 50px;
+            color: #ff006c;
+            font-size: 18px;
+            line-height: 50px;
+        }
+        .footer{
+            display: block;
+            width: 100%;
+            height: 40px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .footer p{
+            width: 100%;
+            height: auto;
+            text-align: center;
+            font-size: 10px;
+            color: white;
+        }
+        #goOrder1{
+            position: absolute;
+            top: 450px;
+            margin-left: 120px;
+        }
+        #goOrder2{
+            position: absolute;
+            top: 450px;
+            margin-left: 70px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/main"><img src="Logo2.png"></a>
+        <div class="header-menu">
+            <a href="/board"><span>게시판 바로가기</span></a>
+            <a href="orderHistory"><span>마이페이지</span></a>
+            <a class="logOut" href="/main/logout"><span>로그아웃</span></a>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="left-img-container">
+            <img src="main_cake1.jpg">
+            <a href="/order2"><div id="goOrder2">프린팅 케이크 주문하기</div></a>
+        </div>
+        <div class="right-img-container">
+            <img src="main_cake2.jpg">
+            <a href="/order1"><div id="goOrder1">케이크 주문하기</div></a>
+        </div>
+    </div>
+    <div class="footer">
+        <p> Copyright(c)2020 CustomCake All rights reserved.</p>
+    </div>
+</body>
+</html>

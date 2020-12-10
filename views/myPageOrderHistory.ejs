@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Cake My Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+        body {font-family: "NanumSquare", Dotum, Arial; margin:0;}
+        
+        #user, #orderHistory {
+            text-shadow: -2px 0 #fff,
+                        0 2px #fff,
+                        2px 0 #fff,
+                        0 -2px #fff;
+            color: #FF7DB4;
+        }
+                
+        button {
+        background-color: #FF7DB4;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        }
+
+        button:hover {
+        opacity: 0.8;
+        }
+
+        .container {
+        background-color: #FFFFFF;
+        display: flex;
+        /* height: 100vh; */
+        justify-content: center;
+        /* align-items: center; */
+        margin: 0px;
+        padding: 16px;
+        margin: 0 auto;
+        width: 80%;
+        }
+
+        .list {
+            float: right;
+            width: 80%;
+            height: 500px;
+            border: 2px solid #E2A6B4;
+            padding: 10px;
+            overflow: auto;
+        }
+        .listOne {
+            border: 2px solid #E2A6B4;
+            /* 내부 요소에 따라 자동 높이 조절 */
+            overflow: hidden;
+            height: auto;
+        }
+        .orderType {
+            margin: 3px 2px;
+        }
+        .printing img {
+            float: left;
+            width: 80px;
+            height: 80px;
+            margin: 0px 10px 2px 2px;
+        }
+        .printing div {
+            width: 80%;
+            margin: 4px;
+        }
+
+        span.psw {
+        float: right;
+        /* padding-top: 16px; */
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 768px) {
+            .container {width: 80%;}
+            .recomment {width: 150px; height: 150px;}
+        }
+    </style>
+</head>
+<body>
+    <%- include('header'); %>
+    <div class="container">
+        <!-- nav -->
+        <%- include('myPageNav'); %>
+        <div class="list">
+            <!-- <%= orderList %> -->
+            <% // 객체 생성
+                let optToKrMap = new Map();
+                optToKrMap.set("heart", "하트"); optToKrMap.set("circle", "원"); optToKrMap.set("rec", "사각형");
+                optToKrMap.set("optionBread-Heart", "하트"); optToKrMap.set("optionBread-Circle", "원"); optToKrMap.set("optionBread-Rectangle", "사각형");
+                optToKrMap.set("optionFloor-1", "1단"); optToKrMap.set("optionFloor-1", "2단");
+                optToKrMap.set("optionCream-Strawberry", "딸기크림"); optToKrMap.set("optionCream-Chocolate", "쵸코크림"); optToKrMap.set("optionCream-Basic", "생크림");
+                optToKrMap.set("strawberry-5", "딸기 5개"); optToKrMap.set("strawberry-10", "딸기 10개");
+                optToKrMap.set("chocolate-5", "쵸코렛 5개"); optToKrMap.set("chocolate-10", "쵸코렛 10개");
+                optToKrMap.set("macaron-3", "마카롱 3개"); optToKrMap.set("macaron-6", "마카롱 6개");
+                optToKrMap.set("candy-10", "별사탕 10개"); optToKrMap.set("candy-20", "별사탕 20개"); %>
+                <!-- <%= optToKrMap.get("heart") %> -->
+            <%  for(var i = 0; i < orderList.length; i++){ %>
+                <!-- <%= orderList[i] %><br> -->
+                <!-- <%= orderList[i].oh_option %><br> -->
+                <% var option = JSON.parse(orderList[i].oh_option) %>
+                <% if('attachment' in option){ %>
+                    <div class="listOne">
+                        <label class="orderType">프린팅 케이크</label>
+                        <div class="printing">
+                            <img src="<%= option.attachment.filename %>">
+                            <div>
+                                <label>빵 모양 : </label><%= optToKrMap.get(option.bread_shape) %><br>
+                                <label>빵 크기 : </label><%= option.bread_size %><br>
+                                <label>가격 : </label><%= option.price %><br>
+                                <label>주문 날짜 : </label><%= orderList[i].oh_date.toISOString().replace(/T/, ' ').replace(/\..+/, '') %><br>
+                            </div>
+                        </div>
+                    </div>
+                <% } else {  %>
+                    <div class="listOne">
+                        <label class="orderType">내맘대로 케이크</label>
+                        <div class="onMyOwn">
+                            <div>
+                                <label>빵 모양 : </label><%= optToKrMap.get(option.bread_shape) %><br>
+                                <label>단 수 : </label><%= optToKrMap.get(option.bread_floor) %><br>
+                                <label>크림 : </label><%= optToKrMap.get(option.bread_crean) %><br>
+                                <% var deco = ""; var deco_arr = String(option.bread_deco).split(','); %>
+                                <label>데코 재료 : </label>
+                                    <%= optToKrMap.get(deco_arr[0]) %>
+                                    <%  for(var j = 1; j < deco_arr.length; j++){ %>
+                                            , <%= optToKrMap.get(deco_arr[j]) %>
+                                    <% } %><br>
+                                <label>가격 : </label><%= option.price %><br>
+                                <label>주문 날짜 : </label><%= orderList[i].oh_date.toISOString().replace(/T/, ' ').replace(/\..+/, '') %><br>
+                            </div>
+                        </div>
+                    </div>
+                <% }  %>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

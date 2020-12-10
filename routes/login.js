@@ -46,14 +46,14 @@ module.exports = function(app, db) {
           {
               u_id: u_id
           };
-          res.redirect("order2");
+          res.redirect("main");
           res.end();
         
         } else {  // 조회된 레코드가 없는 경우 실패 응답 전송
           res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
           res.write('<h1>로그인  실패</h1>');
           res.write('<div><p>아이디와 패스워드를 다시 확인하십시오.</p></div>');
-          res.write("<br><br><a href='/views/login.ejs'>다시 로그인하기</a>");
+          res.write("<br><br><a href='login'>다시 로그인하기</a>");
           res.end();
         }
       });

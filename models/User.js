@@ -128,7 +128,7 @@ function connectDB() {
         UserSchema.static('findAll', function(callback) {
             return this.find({}, callback);
         });
-        
+
         console.log('UserSchema 정의함.');
         
         // UserModel 모델 정의
@@ -205,6 +205,30 @@ module.exports = class Database {
             
         });
         
+    };
+
+    // 유저 정보 get
+    getUserInfo = function(database, u_id, callback) {
+        UserModel.findById(u_id, function(err, userInfo){
+            if (err) {
+                callback(err, null);
+                return;
+            }
+
+            console.log("유저 정보 조회함.");
+            callback(null, JSON.stringify(userInfo));	   
+        });
+    };
+
+    updateUserInfo = function(database, u_id, u_pw, u_name, u_phone, u_address, callback) {
+        var user = new UserModel({ "password": u_pw,"u_name":u_name,"u_phone":u_phone, "u_address":u_address});
+        UserModel.findOneAndUpdate({u_id:u_id}, {u_pw:user.u_pw, salt:user.salt, u_name:u_name, u_phone:u_phone, u_address:u_address}, { multi: true, new: true }, function(err, updatedUser) {
+            if(err){
+                callback(err, null);
+            }else{
+                callback(null, updatedUser);
+            }
+        })
     };
 }
 
