@@ -1,6 +1,7 @@
-module.exports = function(app, userDatabase, orderDatabase) {
+module.exports = function(app, userDatabase, orderDatabase, boardDatabase) {
   var userDb = userDatabase.getDatabase();
   var orderDb = orderDatabase.getDatabase();
+  var boardDb = boardDatabase.getDatabase();
 
   app.get('/orderHistory', (req, res) => {
     var u_id = req.session.user.u_id;
@@ -18,11 +19,48 @@ module.exports = function(app, userDatabase, orderDatabase) {
   });
 
   app.get('/writeByMe', (req, res) => {
-    res.render('myPageWriteByMe.ejs');
+    var u_id = req.session.user.u_id;
+    if (boardDb) {
+      boardDatabase.getBoardListByUId(boardDb, u_id, function(err, boardList) {
+        // 조회된 레코드가 있으면 성공 응답 전송
+        if (boardList) {
+          console.log(boardList);
+          res.render('myPageWriteByMe.ejs', {boardList:boardList});
+        } else {
+          res.render('myPageWriteByMe.ejs', {boardList:"null"});
+        }
+      });
+    }
   });
 
   app.get('/likeBoard', (req, res) => {
-    res.render('myPageLikeBoard.ejs');
+    var u_id = req.session.user.u_id;
+    if (userDb) {
+      userDatabase.getUserInfo(userDb, u_id, function(err, u_info) {
+        // 조회된 레코드가 있으면 성공 응답 전송
+        if (u_info) {
+          console.log(u_info);
+          var u_info_json = JSON.parse(u_info)
+          // console.log(u_info_json[0].u_like);
+          // var u_like = u_info_json[0].u_like;
+          var u_like = u_info_json[0].u_like.substring(0, u_info_json[0].u_like.length -1);
+          // console.log(u_like);
+          if (boardDb) {
+            boardDatabase.getBoardListByBIds(boardDb, u_like, function(err, boardList) {
+              // 조회된 레코드가 있으면 성공 응답 전송
+              if (boardList) {
+                console.log(boardList);
+                res.render('myPageLikeBoard.ejs', {boardList:boardList});
+              } else {
+                res.render('myPageLikeBoard.ejs', {boardList:"null"});
+              }
+            });
+          }
+        } else {
+          res.render('myPageLikeBoard.ejs', {boardList:"null"});
+        }
+      });
+    }
   });
 
   app.get('/editMyInfo', (req, res) => {

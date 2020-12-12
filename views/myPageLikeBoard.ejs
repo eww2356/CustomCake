@@ -6,7 +6,7 @@
     <style>
         @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 
-        body {font-family: "NanumSquare", Dotum, Arial; margin:0;}
+        body {font-family: "NanumSquare", Dotum, Arial; margin:0; overflow: hidden;}
         
         #user, #likeBoard {
             text-shadow: -2px 0 #fff,
@@ -49,6 +49,29 @@
             border: 2px solid #E2A6B4;
             padding: 10px;
         }
+        .listOne {
+            border: 2px solid #E2A6B4;
+            /* 내부 요소에 따라 자동 높이 조절 */
+            overflow: hidden;
+            height: auto;
+        }
+        .list a {
+            text-decoration:none; /* 링크(<a> 태그)가 가지는 기본 꾸밈 효과(밑줄 등)을 없앰 */
+            color: black;
+        }
+        .subject {
+            margin: 4px;
+        }
+        .contents img {
+            float: left;
+            width: 50px;
+            height: 50px;
+            margin: 0px 10px 2px 2px;
+        }
+        .contents div {
+            width: 80%;
+            margin: 4px;
+        }
 
         span.psw {
         float: right;
@@ -67,7 +90,23 @@
     <div class="container">
         <%- include('myPageNav'); %>
         <div class="list">
-            
+            <!-- <%= boardList %> -->
+            <%  for(var i = 0; i < boardList.length; i++){ %>
+            <a href="#">
+            <div class="listOne">
+                <label class="subject">제목 :  <%= boardList[i].b_title %></label>
+                <div class="contents">
+                    <% if('b_picture' in boardList[i]){ %>
+                        <img src="<%= boardList[i].b_picture %>">
+                    <% } %>
+                    <div>
+                        <label>내용 : </label> <%= boardList[i].b_content %><br>
+                        <label>날짜 : </label> <%= boardList[i].b_date.toISOString().replace(/T/, ' ').replace(/\..+/, '') %><br>
+                    </div>
+                </div>
+            </div>
+            </a>
+            <% } %>
         </div>
     </div>
 </body>
