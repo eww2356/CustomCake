@@ -3,20 +3,19 @@ var BoardSchema;
 var BoardModel;
 
 var database = mongoose.connect('mongodb://localhost:27017/local', {
-    useNewUrlParser: true,
-    useCreateIndex: true,
+    useNewUrlParser: true
   })
   .then(() => {
     console.log("Connected to MongoDB --- Board connect");
-    BoardSchema = mongoose.Schema({ // 1
-        b_id : {type: String, required: true},
-        b_date : {type: Date, default:Date.now},
-        b_title : {type: String, required: true},
-        b_content : {type: String, required: true},
-        b_writer : {type: String, required: true},
-        b_file : {},    // ?
-        b_comment : {type: String},
-        b_like : {type: String}
+    BoardSchema = mongoose.Schema({
+      /*b_id : {type: String, required: true},*/
+      b_date : {type: Date, default: Date.now},
+      b_title : {type: String, required: true},
+      b_content : {type: String, required: true},
+      b_writer : {type: String, required:[true, 'b_writer is required!']},
+      b_file : {type: String, required:[true, 'b_file is required!']},
+      //b_comment : {type: String},
+      //b_like : {type: Boolean}
     }, {collection: 'board'});
 
     /* statics추가 */
@@ -30,6 +29,16 @@ var database = mongoose.connect('mongodb://localhost:27017/local', {
       console.log(b_id_list);
       return this.find({b_id:{$in:b_id_list}}, callback);
     });
+
+    BoardSchema.statics.findAll = function (callback) {
+      return this.find({}, callback);
+    };
+    BoardSchema.statics.findBoardId = function (_id, callback){
+      return this.find({_id: _id}, callback);
+    };
+    BoardSchema.statics.deleteOne = function(_id, callback){
+      return this.findOneAndDelete({_id: _id}, callback);
+    }
 
     BoardModel = mongoose.model("board", BoardSchema);
 })
@@ -69,4 +78,56 @@ module.exports = class Database{
           callback(null, boardList);	   
       });
     };
+
+  addBoard = function(database, b_title, b_content, b_file, b_writer, callback){
+    console.log("### addBoard : " + b_title + ', ' + b_writer);
+    var boardModel = new BoardModel({"b_title":b_title, "b_content":b_content, "b_file": b_file, "b_writer":b_writer});
+
+    boardModel.save( function(err, addedBoard) {
+      if(err) {
+        if( callback ) callback(err, null);
+        return;
+      }
+
+      if( callback ) callback(null, addedBoard);
+    });
+  };
+
+  getfindAll = function(database, callback){
+    console.log("### getfindAll-board ###");
+
+    BoardModel.findAll(function( err, boardList ){
+      if( err ){
+        callback(err, null);
+        return;
+      }
+
+      callback(null, boardList);
+    });
+  };
+
+  getfindOne = function(database, _id, callback){
+    console.log("### getfindOne-board ###");
+
+    BoardModel.findBoardId(_id, function(err, boardData){
+      if( err ){
+        if( callback ) callback(err, null);
+        return;
+      }
+
+      callback(null, boardData);
+    });
+  };
+
+  getDeleteOne = function(database, _id, callback){
+    console.log("### getDeleteOne-board ###");
+
+    BoardModel.deleteOne(_id, function(err){
+      if( err ){
+        if( callback ) callback(err);
+        return;
+      }
+    });
+  };
+
 }

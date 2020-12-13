@@ -9,45 +9,59 @@
         body{
             background-color: #FF7DB4;
             font-family: "NanumSquare", Dotum, Arial; 
-           
         }
-        .header{
-            display: block;
-            width: 100%;
-            height: auto;
-            text-align: center;
-        }
-        .header img{
-            margin-top: 5px;
-            margin-bottom: 5px;
-            width: 80px;
-            height: 80px;
-        }
-        .header-menu{
-            margin: 0 auto;
-            text-align: center;
-            border-style: solid;
-            border-color: #ff006c;
-            border-right-width: medium;
-            border-radius: 25px;
-            background-color: white;
-            width: 65%;
-            height: 50px;
-            color: #ff006c;
-            font-size: 18px;
-            line-height: 50px;
-        }
-        .header-menu span{
-            margin: 10px;
-        }
+        /* mainArea - style */
         .main-container{
             display: block;
             margin: 0 auto;
             margin-top: 40px;
             text-align: center;
             width: 100%;
-            height: 500px;
+            height: auto;
         }
+        .board-content{
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-style: solid;
+            border-color: #ff006c;
+            border-right-width: medium;
+            border-radius: 25px;
+            background-color: white;
+            text-align: center;
+            width: 60%;
+            height: auto;
+            color: #ff006c;
+            font-size: 18px;
+            line-height: 50px;
+        }
+        .board-content span{
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+        .board-contnet-img img{
+            margin-top: 20px;
+        }
+        .board-span-left{
+            text-align: left;
+        }
+        .btnProcess{
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-style: solid;
+            border-color: #ff006c;
+            border-right-width: medium;
+            border-radius: 25px;
+            background-color: white;
+            text-align: center;
+            width: 150px;
+            height: 50px;
+            color: #ff006c;
+            font-size: 18px;
+            line-height: 50px;
+        }
+        /* footer - style */
         .footer{
             display: block;
             width: 100%;
@@ -63,36 +77,35 @@
             color: white;
         }
     </style>
+        <!-- 제이쿼리 사용 -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="header">
-        <a href="/main"><img src="Logo2.png"></a>
-        <div class="header-menu">
-            <a href="order1"><span>기본 케이크 주문하기</span></a>
-            <a href="order2"><span>프린팅 케이크 주문하기</span></a>
-            <span>마이페이지</span>
-            <span>로그아웃</span>
-        </div>
-    </div>
+    <!-- main - header -->
+    <%- include('mainHeader'); %>
+    <!-- container -->
     <div class="main-container">
-        <form method="post">
-            <button name="modal" value="open">글쓰기</button>
-            <!-- 글쓰기 model 부분 -->
-            <% if (show_modal) { %>
-                <div id="modal" style="display: block">
-                <!-- 제목, 컨텐츠, 사진업로드, 업로드 버튼 -->
-                    etc
-                </div>
-            <% } %>
-            <!--  -->
-        </form>
+        <a href="/board/new"><div class="btnProcess">글쓰기</div></a>
+    
+        <% for(var i=0; i<boardList.length; i++ ){ %>
+            <div class="board-content">
+                <a href="/board/open/<%= boardList[i]._id %>">
+                    <div class="board-contnet-img">
+                        <% var b_file = JSON.parse(boardList[i].b_file) %>
+                        <% if( 'boardphoto' in b_file ){ %>
+                            <img src="/<%= b_file.boardphoto.filename %>" width="300px" height="300px">
+                        <% } %>
+                    </div>
+                    <span class="board-span-left"><%= i+1 %>. <%= boardList[i].b_title %></span>
+                    <span class="board-span-right"><%= boardList[i].b_writer %></span>
+                </a>
+            </div>
+        <% } %>
+    
     </div>
+    <!-- main - footer -->
     <div class="footer">
         <p> Copyright(c)2020 CustomCake All rights reserved.</p>
     </div>
-
-    <script>
-
-    </script>
 </body>
 </html>

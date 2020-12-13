@@ -1,0 +1,114 @@
+
+<!-- createBoard Form Design -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomCake new Board</title>
+    <style>
+        @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+        body{
+            background-color: #FF7DB4;
+        }
+        .form-container{
+            font-family: "NanumSquare", Dotum, Arial; 
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 100px;
+            margin-bottom: 100px;
+        }
+        .new-form-data{
+            margin: 0 auto;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        .new-form-text{
+            width: 50%;
+            height: auto;
+            margin: 0 auto;
+            padding-left: 10px;
+            text-align: left;
+            font-size: 18px;
+            line-height: 18px;
+        }
+        .new-form-data input,
+        .new-form-data textarea{
+            margin: 0 auto;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            padding: 10px;
+            padding-left: 20px;
+            border-style: solid;
+            border-color: #ff006c;
+            border-right-width: medium;
+            border-radius: 25px;
+            background-color: white;
+            text-align: left;
+            width: 50%;
+            height: auto;
+            color: #ff006c;
+            font-size: 15px;
+            line-height: 50px;
+        }        
+        .btnProcess{
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-style: solid;
+            border-color: #ff006c;
+            border-right-width: medium;
+            border-radius: 25px;
+            background-color: white;
+            text-align: center;
+            width: 150px;
+            height: 50px;
+            color: #ff006c;
+            font-size: 18px;
+            line-height: 50px;
+        }
+    </style>
+    <!-- 제이쿼리 사용 -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $("#boardphotoInput").on('change', function(){
+                readURL(this);
+            });
+        });
+        function readURL(input){
+            console.log("#===== 이미지 변경 =====#");
+            if( input.files && input.files[0] ){
+                var reader = new FileReader();
+    
+                reader.onload = function(e) {
+                    $("#boardphotoOutput").attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h3>주문하신 케이크를 자랑하세요 :)</h3>
+    <form action="/board/new" enctype="multipart/form-data" method="post">
+        <div class="new-form-data">
+            <div class="new-form-text">제목</div>
+            <input type="text" name="b_title">
+        </div>
+        <div class="new-form-data">
+            <div class="new-form-text">내용</div>
+            <textarea name="b_content"></textarea>
+        </div>
+        <div class="new-form-data">
+            <input type="file" name="boardphoto" id="boardphotoInput"><br>
+            <img src="" id="boardphotoOutput" width="300px" height="300px" alt="선택한 이미지가 보여질 영역입니다." >
+        </div>
+
+        <input class="btnProcess" type="submit" value="업로드">
+    </form>
+    </div>
+</body>
+</html>
+

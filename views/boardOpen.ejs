@@ -1,0 +1,122 @@
+
+<!-- openBoard -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomCake open Board</title>
+    <style>
+        @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+        body{
+            background-color: #FF7DB4;
+            font-family: "NanumSquare", Dotum, Arial; 
+        }
+        /* mainArea - style */
+        .main-container{
+            display: block;
+            margin: 0 auto;
+            margin-top: 40px;
+            text-align: center;
+            width: 100%;
+            height: auto;
+        }
+
+        .main-title{
+            margin: 0 auto;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            padding: 10px;
+            padding-left: 20px;
+            border-style: solid;
+            border-color: #ff006c;
+            border-right-width: medium;
+            border-radius: 25px;
+            background-color: white;
+            text-align: left;
+            width: 50%;
+            height: auto;
+            color: #ff006c;
+            font-size: 15px;
+            line-height: 30px;            
+        }
+        .main-content{
+            margin: 0 auto;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            padding: 10px;
+            padding-left: 20px;
+            border-style: solid;
+            border-color: #ff006c;
+            border-right-width: medium;
+            border-radius: 25px;
+            background-color: white;
+            text-align: left;
+            width: 50%;
+            height: auto;
+            color: #ff006c;
+            font-size: 15px;
+            line-height: 30px;
+        }
+        .main-writer{
+            margin-top: 5px;
+            display: block;
+            float: right;
+            color: black;
+            font-size: 15px;
+            line-height: 20px;
+        }
+        .main-date{
+            color: black;
+            font-size: 10px;
+            line-height: 20px;
+
+            margin-bottom: 20px;
+        }
+        .main-img{
+
+        }
+        .btnProcess{
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-style: solid;
+            border-color: #ff006c;
+            border-right-width: medium;
+            border-radius: 25px;
+            background-color: white;
+            text-align: center;
+            width: 150px;
+            height: 50px;
+            color: #ff006c;
+            font-size: 18px;
+            line-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <% if( boardData ){ %>
+            <% for(var i=0; i<boardData.length; i++){ %>
+                <div class="main-title">
+                    제목 : <%= boardData[i].b_title %>
+                    <div class="main-writer">작성자 : <%= boardData[i].b_writer %></div>
+                </div>
+                
+                <div class="main-content">
+                    <div class="main-date"><%= boardData[i].b_date %></div>
+                    <div class="main-img">
+                        <% var b_file = JSON.parse(boardData[i].b_file) %>
+                        <% if( 'boardphoto' in b_file ){ %>
+                            <img src="/<%= b_file.boardphoto.filename %>" width="300px" height="300px">
+                        <% } %> 
+                    </div>
+                    <%= boardData[i].b_content %>
+                </div>
+            <% } %>
+        <% } %>
+
+        <a href="/board/delete/<%= boardData[0]._id %>"><div class="btnProcess">삭제</div></a>
+    </div>
+</body>
+</html>

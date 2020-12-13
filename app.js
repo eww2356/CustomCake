@@ -10,7 +10,7 @@ var userDb = new userDatabase();
 const oderDatabase = require('./models/Order');
 var orderDb = new oderDatabase();
 const boardDatabase = require('./models/Board');
-var boardDb = new boardDatabase();
+var borderDb = new boardDatabase();
 
 // Express의 미들웨어 불러오기
 var bodyParser = require('body-parser')
@@ -100,7 +100,7 @@ var mainRouter = require('./routes/main')(app);
 var customOrderRouter = require('./routes/order1')(app, orderDb/*orderbasicDb*/);  // order1
 var paintingOrderRouter = require('./routes/order2')(app, orderDb, upload);  // order2
 var userRouter = require('./routes/user')(app, userDb, orderDb, boardDb);  // mypage
-// var boardRouter = require('./routes/board')(app);
+var boardRouter = require('./routes/board')(app, borderDb, upload);
 
 
 //===== 서버 시작 =====//
