@@ -31,13 +31,15 @@ var database = mongoose.connect('mongodb://localhost:27017/local', {
     BoardSchema.statics.findAll = function (callback) {
       return this.find({}, callback);
     };
+
     BoardSchema.statics.findBoardId = function (_id, callback){
       return this.find({_id: _id}, callback);
     };
 
     BoardSchema.statics.findBoardIdLike = function(_id_array, callback){
-      return this.find({_id: { $in: _id_array } }, callback);
+      return this.find({_id: {$in: _id_array}}, callback);
     };
+
     BoardSchema.statics.deleteOne = function(_id, callback){
       return this.findOneAndDelete({_id: _id}, callback);
     }
@@ -53,7 +55,6 @@ module.exports = class Database{
     getDatabase() {
         return database;
     }
-    /* 게시글 추가 / 삭제 */
 
     // 특정 유저가 게시한 게시글 목록 조회
     getBoardListByUId = function(database, u_id, callback) {
@@ -81,70 +82,70 @@ module.exports = class Database{
       });
     };
 
-  addBoard = function(database, b_title, b_content, b_file, b_writer, callback){
-    console.log("### addBoard : " + b_title + ', ' + b_writer);
-    var boardModel = new BoardModel({"b_title":b_title, "b_content":b_content, "b_file": b_file, "b_writer":b_writer});
+    addBoard = function(database, b_title, b_content, b_file, b_writer, callback){
+      console.log("### addBoard : " + b_title + ', ' + b_writer);
+      var boardModel = new BoardModel({"b_title":b_title, "b_content":b_content, "b_file": b_file, "b_writer":b_writer});
 
-    boardModel.save( function(err, addedBoard) {
-      if(err) {
-        if( callback ) callback(err, null);
-        return;
-      }
+      boardModel.save( function(err, addedBoard) {
+        if(err) {
+          if( callback ) callback(err, null);
+          return;
+        }
 
-      if( callback ) callback(null, addedBoard);
-    });
-  };
+        if( callback ) callback(null, addedBoard);
+      });
+    };
 
-  getfindAll = function(database, callback){
-    console.log("### getfindAll-board ###");
+    getfindAll = function(database, callback){
+      console.log("### getfindAll-board ###");
 
-    BoardModel.findAll(function( err, boardList ){
-      if( err ){
-        callback(err, null);
-        return;
-      }
+      BoardModel.findAll(function( err, boardList ){
+        if( err ){
+          callback(err, null);
+          return;
+        }
 
-      callback(null, boardList);
-    });
-  };
+        callback(null, boardList);
+      });
+    };
 
-  getfindOne = function(database, _id, callback){
-    console.log("### getfindOne-board ###");
+    getfindOne = function(database, _id, callback){
+      console.log("### getfindOne-board ###");
 
-    BoardModel.findBoardId(_id, function(err, boardData){
-      if( err ){
-        if( callback ) callback(err, null);
-        return;
-      }
+      BoardModel.findBoardId(_id, function(err, boardData){
+        if( err ){
+          if( callback ) callback(err, null);
+          return;
+        }
 
-      callback(null, boardData);
-    });
-  };
+        callback(null, boardData);
+      });
+    };
   
-  // 배열_id find하기
-  getfindAllLike = function(database, _id_array, callback){
-    console.log("### getfindAllLike-board ###");
-    console.log(JSON.stringify(_id_array));
+    // 배열_id find하기
+    getfindAllLike = function(database, _id_array, callback){
+      console.log("### getfindAllLike-board ###");
+      console.log(JSON.stringify(_id_array));
 
-    BoardModel.findBoardIdLike(_id_array, function(err, boardData){
-      if( err ){
-        if( callback ) callback(err, null);
-        return;
-      }
+      BoardModel.findBoardIdLike(_id_array, function(err, boardData){
+        if( err ){
+          if( callback ) callback(err, null);
+          return;
+        }
 
-      callback(null, boardData);
-    });
-  };
+        callback(null, boardData);
+      });
+    };
 
-  getDeleteOne = function(database, _id, callback){
-    console.log("### getDeleteOne-board ###");
+    getDeleteOne = function(database, _id, callback){
+      console.log("### getDeleteOne-board ###");
 
-    BoardModel.deleteOne(_id, function(err){
-      if( err ){
-        if( callback ) callback(err);
-        return;
-      }
-    });
-  };
+      BoardModel.deleteOne(_id, function(err){
+        if( err ){
+          if( callback ) callback(err);
+          return;
+        }
+      });
+    };
 
 }

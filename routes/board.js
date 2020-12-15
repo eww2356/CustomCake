@@ -42,22 +42,20 @@ module.exports = function(app, db, userdb, upload) {
     }
   });
 
-  // openBoard - likeBoard
+  // openBoard - likeBoard (좋아요 등록 과정)
   app.get('/board/likeInsert/:id', (req, res) => {
     var board_id = req.params.id;
     var user_id = req.session.user.u_id;
 
-    console.log( "----- likeInsert ----- [_id] :" + board_id + ", [user_id] : " + user_id);
+    console.log( "----- likeInsert  [_id] :" + board_id + ", [user_id] : " + user_id);
 
     if( userdatabase ){
       userdb.updateUserUlike(userdatabase, user_id, board_id, function(err, updateUser){
         if( err ){
-          console.log(JSON.stringify(err));
-          console.log("#####FAILED UPDATE#####");
+          console.log("##### FAILED UPDATE #####");
         }
         if( updateUser ){
-          console.log(JSON.stringify(updateUser));
-          console.log("#####SUCCESS UPDATE#####");
+          console.log("##### SUCCESS UPDATE #####");
         }
       });
     }
@@ -74,9 +72,9 @@ module.exports = function(app, db, userdb, upload) {
     var b_content = req.body.b_content;
     var b_file = req.files;
 
-    console.dir('#==== 업로드된 첫번째 파일 정보 =====#');
-    console.dir(req.files[0]);
-    console.dir('#===========#');
+    // console.dir('#==== 업로드된 첫번째 파일 정보 =====#');
+    // console.dir(req.files[0]);
+    // console.dir('#===========#');
 
     var b_writer = req.session.user.u_id;
 
@@ -86,15 +84,13 @@ module.exports = function(app, db, userdb, upload) {
         size = 0;
         
     if( Array.isArray(b_file) ){
-      console.log(b_file.length);
-      // 확인용
       for( var i=0; i<b_file.length; i++ ){
         originalname = b_file[i].originalname;
         filename = b_file[i].filename;
         mimetype = b_file[i].mimetype;
         size = b_file[i].size;
       }
-      console.log('currentFile : ' + originalname + ', ' + filename + ', ' + mimetype + ', ' + size);
+      // console.log('currentFile : ' + originalname + ', ' + filename + ', ' + mimetype + ', ' + size);
     } else {
       console.log('----- currentFile undifined. -----');
     }

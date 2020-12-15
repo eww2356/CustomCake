@@ -47,27 +47,26 @@ module.exports = function(app, userDatabase, orderDatabase, boardDatabase) {
           
           var u_like_array = [];
 
-          console.log("###########################################");
-          console.log(JSON.stringify(u_info_json[0].u_like));
-          console.log("#### userDatabase : u_like . u_like_of_b_id ####");
+          // console.log("###########################################");
+          // console.log(JSON.stringify(u_info_json[0].u_like));
+
+          console.log("----- userDatabase : u_like . u_like_of_b_id -----");
           for( var ij in u_info_json[0].u_like ){
             console.log(JSON.stringify(u_info_json[0].u_like[ij].u_like_of_b_id));
             u_like_array.push(u_info_json[0].u_like[ij].u_like_of_b_id);
           }
 
-          console.log(u_like_array.length);
-          
+          // console.log(u_like_array.length);        // TEST-CODE
           // var u_like = "5fd8151028c255315468d15e"; // TEST-CODE
 
           if (boardDb) {
             boardDatabase.getfindAllLike(boardDb, /*u_like*/u_like_array, function(err, boardList) {
               // 조회된 레코드가 있으면 성공 응답 전송
               if (boardList) {
-                console.log("#######################");
                 console.log(boardList);
                 res.render('myPageLikeBoard.ejs', {boardList:boardList});
               } else {
-                console.log("undefined boardList #######################");
+                console.log("----- undefined boardList -----");
                 res.render('myPageLikeBoard.ejs', {boardList:"null"});
               }
             });

@@ -236,10 +236,8 @@ module.exports = class Database {
     // 사용자 정보에 u_like -> 좋아요 등록
     updateUserUlike = function(database, u_id, b_id, callback){
         
-        var update_u_like = {
-            u_like_of_b_id: b_id
-        };
-        console.log(JSON.stringify(update_u_like));
+        // var update_u_like = {u_like_of_b_id: b_id};  //TEST-CODE
+        // console.log(JSON.stringify(update_u_like));  //TEST-CODE
 
         UserModel.findOneAndUpdate( {u_id: u_id}, { $addToSet: { u_like: {u_like_of_b_id : b_id} } }, { upsert: true }, function(err, updatedUser){
             if( err ){
