@@ -100,7 +100,7 @@ var mainRouter = require('./routes/main')(app);
 var customOrderRouter = require('./routes/order1')(app, orderDb/*orderbasicDb*/);  // order1
 var paintingOrderRouter = require('./routes/order2')(app, orderDb, upload);  // order2
 var userRouter = require('./routes/user')(app, userDb, orderDb, boardDb);  // mypage
-var boardRouter = require('./routes/board')(app, boardDb, upload);
+var boardRouter = require('./routes/board')(app, boardDb, userDb, upload);
 
 
 //===== 서버 시작 =====//

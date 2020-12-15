@@ -96,8 +96,9 @@
             <div class="listOne">
                 <label class="subject">제목 :  <%= boardList[i].b_title %></label>
                 <div class="contents">
-                    <% if('b_picture' in boardList[i]){ %>
-                        <img src="<%= boardList[i].b_picture %>">
+                    <% var b_file = JSON.parse(boardList[i].b_file) %>
+                    <% if('b_file' in boardList[i]){ %>
+                        <img src="<%= b_file.boardphoto.filename %>">
                     <% } %>
                     <div>
                         <label>내용 : </label> <%= boardList[i].b_content %><br>

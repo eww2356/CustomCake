@@ -1,5 +1,6 @@
-module.exports = function(app, db, upload) {
+module.exports = function(app, db, userdb, upload) {
   var database = db.getDatabase();  // Board.js
+  var userdatabase = userdb.getDatabase();  // User.js
   var boardData_info = "";
 
   // openPage
@@ -37,6 +38,27 @@ module.exports = function(app, db, upload) {
 
         console.log("----- getfineOne : boardData -----");
         console.log(JSON.stringify(boardData));
+      });
+    }
+  });
+
+  // openBoard - likeBoard
+  app.get('/board/likeInsert/:id', (req, res) => {
+    var board_id = req.params.id;
+    var user_id = req.session.user.u_id;
+
+    console.log( "----- likeInsert ----- [_id] :" + board_id + ", [user_id] : " + user_id);
+
+    if( userdatabase ){
+      userdb.updateUserUlike(userdatabase, user_id, board_id, function(err, updateUser){
+        if( err ){
+          console.log(JSON.stringify(err));
+          console.log("#####FAILED UPDATE#####");
+        }
+        if( updateUser ){
+          console.log(JSON.stringify(updateUser));
+          console.log("#####SUCCESS UPDATE#####");
+        }
       });
     }
   });

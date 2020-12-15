@@ -14,8 +14,6 @@ var database = mongoose.connect('mongodb://localhost:27017/local', {
       b_content : {type: String, required: true},
       b_writer : {type: String, required:[true, 'b_writer is required!']},
       b_file : {type: String, required:[true, 'b_file is required!']},
-      //b_comment : {type: String},
-      //b_like : {type: Boolean}
     }, {collection: 'board'});
 
     /* statics추가 */
@@ -35,6 +33,10 @@ var database = mongoose.connect('mongodb://localhost:27017/local', {
     };
     BoardSchema.statics.findBoardId = function (_id, callback){
       return this.find({_id: _id}, callback);
+    };
+
+    BoardSchema.statics.findBoardIdLike = function(_id_array, callback){
+      return this.find({_id: { $in: _id_array } }, callback);
     };
     BoardSchema.statics.deleteOne = function(_id, callback){
       return this.findOneAndDelete({_id: _id}, callback);
@@ -110,6 +112,21 @@ module.exports = class Database{
     console.log("### getfindOne-board ###");
 
     BoardModel.findBoardId(_id, function(err, boardData){
+      if( err ){
+        if( callback ) callback(err, null);
+        return;
+      }
+
+      callback(null, boardData);
+    });
+  };
+  
+  // 배열_id find하기
+  getfindAllLike = function(database, _id_array, callback){
+    console.log("### getfindAllLike-board ###");
+    console.log(JSON.stringify(_id_array));
+
+    BoardModel.findBoardIdLike(_id_array, function(err, boardData){
       if( err ){
         if( callback ) callback(err, null);
         return;

@@ -38,7 +38,9 @@ function connectDB() {
             u_name:{type:String, required:[true,'u_name is required!'], index: 'hashed'},
             u_phone:{type:String, required:[true,'u_phone is required!']},
             u_address:{type:String, required:[true,'u_address is required!']},
-            u_like:{type:String, 'default':""}
+            u_like:{
+                u_like_of_b_id : {type: String}
+            }
         }, {collection: 'user'});
         
 
@@ -229,6 +231,24 @@ module.exports = class Database {
                 callback(null, updatedUser);
             }
         })
+    };
+
+    // 사용자 정보에 u_like -> 좋아요 등록
+    updateUserUlike = function(database, u_id, b_id, callback){
+        
+        var update_u_like = {
+            u_like_of_b_id: b_id
+        };
+        console.log(JSON.stringify(update_u_like));
+
+        UserModel.findOneAndUpdate( {u_id: u_id}, { $addToSet: { u_like: {u_like_of_b_id : b_id} } }, { upsert: true }, function(err, updatedUser){
+            if( err ){
+                callback(err, null);
+            } else {
+                callback(null, updatedUser);
+            }
+        }).exec();
+
     };
 }
 
