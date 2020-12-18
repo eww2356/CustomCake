@@ -1,11 +1,12 @@
 module.exports = function(app, db) {
-
     var database = db.getDatabase();    //OrderBasic.js
     
+    // 케이크 주문하기 페이지 호출
     app.get('/order1', (req, res) => {
       res.render('order1.ejs');
     });
 
+    // 주문 하기 버튼 후 프로세스
     app.post('/order1Data', (req, res) => {
         console.log('/order1Data CALL');
         console.log('/order1Data : ' + JSON.stringify(req.body));
@@ -16,7 +17,7 @@ module.exports = function(app, db) {
         var optionDeco = req.body.optionDeco;   // optionDeco["strawberry-5"]
         var price = 10000;
 
-        if( optionFloor == "optionFloor-1" ){
+        if( optionFloor == "optionFloor-1" ){       // option값에 따라서 가격계산
             price += 0;
         } else if( optionFloor == "optionFloor-2" ){
             price += 10000;

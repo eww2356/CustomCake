@@ -233,7 +233,7 @@ module.exports = class Database {
         })
     };
 
-    // 사용자 정보에 u_like -> 좋아요 등록
+    // 게시판에서 좋아요 버튼 클릭시 수행 -> 유저정보에 게시판 _id 배열형태로 츄가
     updateUserUlike = function(database, u_id, b_id, callback){
         
         // var update_u_like = {u_like_of_b_id: b_id};  //TEST-CODE

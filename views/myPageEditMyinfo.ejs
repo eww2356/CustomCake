@@ -85,7 +85,7 @@
         <%- include('myPageNav'); %>
         <div class="list">
             <form class="fm" action="/editMyInfoProc" method="post">
-                <% var user = JSON.parse(userInfo.replace("[","").replace("]","")) %>
+                <% var user = JSON.parse(userInfo.substring(1,userInfo.length - 1)) %>
                 <div class="lbl"><label>Id : </label><%= user.u_id %></div><br>
                 <div class="lbl"><label>Password : </label><input type="password" name="u_pw"></div><br>
                 <div class="lbl"><label>Name : </label><input type="text" name="u_name" value="<%= user.u_name %>"></div><br>

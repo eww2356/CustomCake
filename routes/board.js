@@ -3,7 +3,7 @@ module.exports = function(app, db, userdb, upload) {
   var userdatabase = userdb.getDatabase();  // User.js
   var boardData_info = "";
 
-  // openPage
+  // openPage : 게시판 메인 페이지
   app.get('/board', (req, res) => {
     if( database ){
       db.getfindAll(database, function(err, boardList){
@@ -20,7 +20,7 @@ module.exports = function(app, db, userdb, upload) {
     // res.render('board.ejs');
   });
 
-  // openBoard
+  // openBoard : 게시판 글 상세보기 페이지
   app.get('/board/open/:id', (req, res) => {
 
     var board_id = req.params.id;
@@ -42,7 +42,7 @@ module.exports = function(app, db, userdb, upload) {
     }
   });
 
-  // openBoard - likeBoard (좋아요 등록 과정)
+  // openBoard - likeBoard : 게시판 글 상세보기 페이지에서 좋아요 버튼 클릭 프로세스
   app.get('/board/likeInsert/:id', (req, res) => {
     var board_id = req.params.id;
     var user_id = req.session.user.u_id;
@@ -53,15 +53,17 @@ module.exports = function(app, db, userdb, upload) {
       userdb.updateUserUlike(userdatabase, user_id, board_id, function(err, updateUser){
         if( err ){
           console.log("##### FAILED UPDATE #####");
+          res.end();
         }
         if( updateUser ){
           console.log("##### SUCCESS UPDATE #####");
+          res.end();
         }
       });
     }
   });
 
-  // createBoard
+  // createBoard : 게시판 메인 페이지에서 글쓰기 버튼 클릭 프로세스
   app.get('/board/new', (req, res) => {
     res.render('boardNewContent.ejs');
   });
@@ -71,10 +73,6 @@ module.exports = function(app, db, userdb, upload) {
     var b_title = req.body.b_title;
     var b_content = req.body.b_content;
     var b_file = req.files;
-
-    // console.dir('#==== 업로드된 첫번째 파일 정보 =====#');
-    // console.dir(req.files[0]);
-    // console.dir('#===========#');
 
     var b_writer = req.session.user.u_id;
 
@@ -92,7 +90,7 @@ module.exports = function(app, db, userdb, upload) {
       }
       // console.log('currentFile : ' + originalname + ', ' + filename + ', ' + mimetype + ', ' + size);
     } else {
-      console.log('----- currentFile undifined. -----');
+      console.log('----- currentFile undefined. -----');
     }
     
     if( database ){
@@ -138,7 +136,7 @@ module.exports = function(app, db, userdb, upload) {
   }
   });
 
-  // deleteBoard
+  // deleteBoard : 게시판 글 상세보기 페이지에서 글 삭제하기 프로세스
   app.get('/board/delete/:id', (req, res) => {
 
     var board_id = req.params.id;
@@ -148,7 +146,8 @@ module.exports = function(app, db, userdb, upload) {
       var b_writer = req.session.user.u_id;
     };
 
-    if( board_writer == b_writer ){
+    if( board_writer == b_writer ){ // 로그인 한 사용자와 작성자 비교
+
       console.log("--- 일치 : deleteProcess START ---");
       if( database ){
         db.getDeleteOne(database, board_id, function(err){
@@ -177,12 +176,15 @@ module.exports = function(app, db, userdb, upload) {
         res.redirect("/board");
         res.end();
       }
+
     } else {
+
       console.log("--- 불일치 : deleteProcess STOP ---");
       res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
       res.write('<h1>게시글 삭제  실패</h1>');
       res.write('<div><p>삭제를 위한 권한이 없습니다.</p></div>');
       res.end();
+      
     }
   });
 }

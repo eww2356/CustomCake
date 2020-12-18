@@ -28,18 +28,22 @@ var database = mongoose.connect('mongodb://localhost:27017/local', {
       return this.find({b_id:{$in:b_id_list}}, callback);
     });
 
+    // 전체 결과 호출
     BoardSchema.statics.findAll = function (callback) {
       return this.find({}, callback);
     };
 
+    // 고유 _id 로 해당하는 결과 호출
     BoardSchema.statics.findBoardId = function (_id, callback){
       return this.find({_id: _id}, callback);
     };
 
+    // 고유 _id를 배열의 형태로 전달하여 결과 호출
     BoardSchema.statics.findBoardIdLike = function(_id_array, callback){
       return this.find({_id: {$in: _id_array}}, callback);
     };
 
+    // 고유 _id 로 해당하는 결과 삭제 및 업데이트
     BoardSchema.statics.deleteOne = function(_id, callback){
       return this.findOneAndDelete({_id: _id}, callback);
     }
@@ -82,6 +86,7 @@ module.exports = class Database{
       });
     };
 
+    // 게시판에 글 등록
     addBoard = function(database, b_title, b_content, b_file, b_writer, callback){
       console.log("### addBoard : " + b_title + ', ' + b_writer);
       var boardModel = new BoardModel({"b_title":b_title, "b_content":b_content, "b_file": b_file, "b_writer":b_writer});
@@ -96,6 +101,7 @@ module.exports = class Database{
       });
     };
 
+    // 게시판 메인페이지 호출시 모든 글 조회
     getfindAll = function(database, callback){
       console.log("### getfindAll-board ###");
 
@@ -109,6 +115,7 @@ module.exports = class Database{
       });
     };
 
+    // 선택한 글 상세보기 페이지에서 조회
     getfindOne = function(database, _id, callback){
       console.log("### getfindOne-board ###");
 
@@ -122,7 +129,7 @@ module.exports = class Database{
       });
     };
   
-    // 배열_id find하기
+    // 마이페이지에에서 조회시 게시판 _id 배열형태로 전달 후 결과 조회
     getfindAllLike = function(database, _id_array, callback){
       console.log("### getfindAllLike-board ###");
       console.log(JSON.stringify(_id_array));
@@ -137,6 +144,7 @@ module.exports = class Database{
       });
     };
 
+    // 선택된 게시글의 고유_id로 게시글 삭제
     getDeleteOne = function(database, _id, callback){
       console.log("### getDeleteOne-board ###");
 
